@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TradingJournal Pro — Suis ta progression, améliore ton winrate</title>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Instrument+Mono:ital@0;1&display=swap" rel="stylesheet">
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-SJQCEGS8SH"></script>
+<script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SJQCEGS8SH');</script>
+<style>
+:root {
+  --bg:#05060f;
+  --s1:#090b18;
+  --s2:#0e1222;
+  --s3:#131828;
+  --border:#171e30;
+  --border2:#1f2840;
+  --accent:#7c5cfc;
+  --accent2:#a78bfa;
+  --green:#00d68f;
+  --red:#ff4d6d;
+  --gold:#f5c842;
+  --blue:#3d8bff;
+  --text:#e4e9f8;
+  --muted:#3a4a6e;
+  --muted2:#1e2840;
+}
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',sans-serif;overflow-x:hidden;}
+
+/* ── BG ── */
+.bg-layer{position:fixed;inset:0;z-index:0;pointer-events:none;}
+.bg-grid{background-image:linear-gradient(rgba(124,92,252,0.04) 1px,transparent 1px),linear-gradient(90deg,rgba(124,92,252,0.04) 1px,transparent 1px);background-size:48px 48px;width:100%;height:100%;}
+.bg-glow1{position:absolute;top:-200px;left:-200px;width:700px;height:700px;border-radius:50%;background:radial-gradient(circle,rgba(124,92,252,0.08),transparent 65%);filter:blur(60px);}
+.bg-glow2{position:absolute;bottom:-200px;right:-200px;width:600px;height:600px;border-radius:50%;background:radial-gradient(circle,rgba(0,214,143,0.06),transparent 65%);filter:blur(60px);}
+
+.wrap{max-width:1100px;margin:0 auto;padding:0 24px;position:relative;z-index:1;}
+
+/* ── NAV ── */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:14px 0;background:rgba(5,6,15,0.85);backdrop-filter:blur(20px);border-bottom:1px solid var(--border);}
+.nav-in{max-width:1100px;margin:0 auto;padding:0 24px;display:flex;align-items:center;justify-content:space-between;}
+.nav-logo{display:flex;align-items:center;gap:10px;text-decoration:none;}
+.nav-logo-ic{width:32px;height:32px;border-radius:8px;background:linear-gradient(135deg,var(--accent),#5b3de8);display:flex;align-items:center;justify-content:center;font-size:16px;}
+.nav-logo-tx{font-size:16px;font-weight:800;color:var(--text);}
+.nav-logo-tx span{color:var(--accent2);}
+.nav-price{font-family:'Instrument Mono',monospace;font-size:13px;color:var(--accent2);font-weight:700;}
+.nav-cta{padding:9px 22px;border-radius:9px;background:linear-gradient(135deg,var(--accent),#5b3de8);color:#fff;font-size:13px;font-weight:800;text-decoration:none;transition:all 0.3s;box-shadow:0 0 20px rgba(124,92,252,0.25);}
+.nav-cta:hover{transform:translateY(-1px);box-shadow:0 4px 24px rgba(124,92,252,0.4);}
+
+/* ── HERO ── */
+.hero{min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;padding:120px 0 80px;}
+.hero-badge{display:inline-flex;align-items:center;gap:8px;padding:7px 18px;border-radius:99px;border:1px solid rgba(124,92,252,0.3);background:rgba(124,92,252,0.07);font-family:'Instrument Mono',monospace;font-size:11px;color:var(--accent2);letter-spacing:2px;text-transform:uppercase;margin-bottom:28px;animation:up 0.7s ease both;}
+.hero-badge::before{content:'';width:6px;height:6px;border-radius:50%;background:var(--accent2);box-shadow:0 0 8px var(--accent2);animation:pulse 2s infinite;}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.3}}
+.hero-h1{font-size:clamp(44px,7vw,88px);font-weight:900;line-height:0.95;letter-spacing:-2px;margin-bottom:20px;animation:up 0.7s ease 0.1s both;}
+.hero-h1 .l1{display:block;color:var(--text);}
+.hero-h1 .l2{display:block;background:linear-gradient(90deg,var(--accent2),var(--green));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;}
+.hero-sub{font-size:clamp(16px,2.2vw,20px);color:var(--muted);line-height:1.7;max-width:580px;margin:0 auto 20px;animation:up 0.7s ease 0.15s both;}
+.hero-sub strong{color:var(--text);}
+.hero-truth{font-size:15px;color:var(--muted);margin-bottom:36px;animation:up 0.7s ease 0.2s both;}
+.hero-truth span{color:var(--green);font-weight:700;}
+
+/* Price box */
+.price-box{display:inline-flex;flex-direction:column;align-items:center;gap:6px;background:rgba(124,92,252,0.06);border:1px solid rgba(124,92,252,0.2);border-radius:16px;padding:20px 40px;margin-bottom:28px;animation:up 0.7s ease 0.25s both;}
+.price-label{font-size:12px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--muted);font-family:'Instrument Mono',monospace;}
+.price-amount{font-size:clamp(36px,5vw,56px);font-weight:900;color:var(--text);line-height:1;}
+.price-fcfa{font-size:20px;font-weight:700;color:var(--accent2);margin-left:6px;}
+.price-note{font-size:12px;color:var(--muted);font-family:'Instrument Mono',monospace;}
+
+.hero-ctas{display:flex;gap:12px;justify-content:center;flex-wrap:wrap;animation:up 0.7s ease 0.3s both;}
+.btn-main{padding:16px 36px;border-radius:12px;background:linear-gradient(135deg,var(--accent),#5b3de8);color:#fff;font-size:16px;font-weight:800;text-decoration:none;transition:all 0.3s;box-shadow:0 0 40px rgba(124,92,252,0.3);display:flex;align-items:center;gap:8px;}
+.btn-main:hover{transform:translateY(-2px);box-shadow:0 8px 48px rgba(124,92,252,0.45);}
+.btn-ghost{padding:16px 28px;border-radius:12px;border:1px solid var(--border2);color:var(--text);font-size:15px;font-weight:700;text-decoration:none;transition:all 0.3s;}
+.btn-ghost:hover{border-color:var(--accent);color:var(--accent2);}
+
+.hero-proof{display:flex;align-items:center;gap:16px;justify-content:center;margin-top:36px;font-size:13px;color:var(--muted);animation:up 0.7s ease 0.35s both;flex-wrap:wrap;gap:20px;}
+.proof-item{display:flex;align-items:center;gap:7px;}
+.proof-item::before{content:'✓';color:var(--green);font-weight:800;}
+
+@keyframes up{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+/* ── PROBLEM ── */
+.prob-section{padding:80px 0;border-top:1px solid var(--border);}
+.sec-tag{font-family:'Instrument Mono',monospace;font-size:10px;color:var(--accent2);letter-spacing:3px;text-transform:uppercase;margin-bottom:14px;}
+.sec-h2{font-size:clamp(28px,4vw,52px);font-weight:800;letter-spacing:-1px;line-height:1.1;margin-bottom:12px;}
+.sec-sub{font-size:15px;color:var(--muted);line-height:1.7;max-width:480px;}
+.prob-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:48px;}
+.prob-card{background:rgba(255,77,109,0.04);border:1px solid rgba(255,77,109,0.12);border-radius:14px;padding:22px;}
+.prob-card.sol{background:rgba(0,214,143,0.04);border-color:rgba(0,214,143,0.12);}
+.prob-tag{font-size:10px;font-weight:700;letter-spacing:2px;text-transform:uppercase;margin-bottom:18px;font-family:'Instrument Mono',monospace;}
+.prob-tag.p{color:var(--red);}
+.prob-tag.s{color:var(--green);}
+.prob-item{display:flex;align-items:flex-start;gap:10px;margin-bottom:12px;font-size:14px;line-height:1.6;}
+.prob-item.p{color:rgba(255,77,109,0.7);}
+.prob-item.s{color:var(--text);}
+.pi-icon{flex-shrink:0;margin-top:2px;font-size:14px;}
+
+/* ── FEATURES ── */
+.feat-section{padding:80px 0;border-top:1px solid var(--border);}
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px;}
+.feat-card{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:22px;position:relative;overflow:hidden;transition:all 0.3s;}
+.feat-card::before{content:'';position:absolute;inset:0;opacity:0;transition:opacity 0.3s;background:radial-gradient(circle at 50% 0%,rgba(124,92,252,0.08),transparent 70%);}
+.feat-card:hover{border-color:rgba(124,92,252,0.3);transform:translateY(-3px);}
+.feat-card:hover::before{opacity:1;}
+.feat-icon{font-size:28px;margin-bottom:12px;}
+.feat-title{font-size:15px;font-weight:700;margin-bottom:8px;}
+.feat-desc{font-size:12px;color:var(--muted);line-height:1.7;}
+.feat-new{display:inline-block;margin-top:10px;padding:2px 10px;border-radius:99px;font-size:9px;font-weight:700;letter-spacing:1px;text-transform:uppercase;background:rgba(124,92,252,0.15);color:var(--accent2);}
+
+/* ── SCREENSHOTS ── */
+.screen-section{padding:80px 0;border-top:1px solid var(--border);overflow:hidden;}
+.screen-tabs{display:flex;gap:6px;background:var(--s1);padding:5px;border-radius:12px;border:1px solid var(--border);width:fit-content;margin:32px auto;flex-wrap:wrap;justify-content:center;}
+.stab{padding:9px 20px;border-radius:9px;border:none;background:transparent;color:var(--muted);font-family:'Plus Jakarta Sans',sans-serif;font-size:13px;font-weight:700;cursor:pointer;transition:all 0.2s;}
+.stab.active{background:var(--accent);color:#fff;}
+.screen-preview{position:relative;max-width:900px;margin:0 auto;}
+.screen-frame{background:var(--s2);border:1px solid var(--border2);border-radius:16px;overflow:hidden;box-shadow:0 40px 80px rgba(0,0,0,0.6),0 0 60px rgba(124,92,252,0.08);}
+.screen-bar{background:var(--s3);padding:12px 18px;display:flex;align-items:center;gap:10px;border-bottom:1px solid var(--border);}
+.sdots{display:flex;gap:5px;}
+.sdot{width:10px;height:10px;border-radius:50%;}
+.sd-r{background:#ff5f57;}.sd-y{background:#febc2e;}.sd-g{background:#28c840;}
+.surl{flex:1;background:rgba(255,255,255,0.05);border-radius:6px;padding:4px 12px;font-family:'Instrument Mono',monospace;font-size:11px;color:var(--muted);text-align:center;}
+.screen-content{padding:24px;display:none;}
+.screen-content.active{display:block;}
+
+/* Mock journal UI */
+.mock-kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:18px;}
+.mock-kpi{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+.mk-val{font-family:'Instrument Mono',monospace;font-size:22px;font-weight:500;line-height:1;margin-bottom:4px;}
+.mk-lbl{font-size:9px;color:var(--muted);text-transform:uppercase;letter-spacing:1px;}
+.mock-table{background:var(--s1);border:1px solid var(--border);border-radius:10px;overflow:hidden;}
+.mt-head{display:grid;grid-template-columns:1fr 1fr 60px 60px 80px 80px 70px;gap:0;background:var(--s3);padding:10px 14px;font-size:9px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:var(--muted);}
+.mt-row{display:grid;grid-template-columns:1fr 1fr 60px 60px 80px 80px 70px;gap:0;padding:10px 14px;border-top:1px solid var(--border);font-size:11px;align-items:center;}
+.badge-w{background:rgba(0,214,143,0.15);color:var(--green);padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;}
+.badge-l{background:rgba(255,77,109,0.15);color:var(--red);padding:2px 8px;border-radius:4px;font-size:9px;font-weight:700;}
+.pnl-p{color:var(--green);font-family:'Instrument Mono',monospace;}
+.pnl-n{color:var(--red);font-family:'Instrument Mono',monospace;}
+
+/* Mock stats */
+.mock-stats-grid{display:grid;grid-template-columns:2fr 1fr;gap:12px;}
+.mock-equity{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:14px;}
+.mock-eq-title{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:10px;}
+.mock-piecol{display:flex;flex-direction:column;gap:10px;}
+.mock-pie-box{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:14px;text-align:center;}
+.pie-num{font-family:'Instrument Mono',monospace;font-size:28px;font-weight:500;}
+.pie-lbl{font-size:10px;color:var(--muted);margin-top:3px;}
+
+/* Mock rapport */
+.mock-rapport{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
+.mock-rcard{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:16px;}
+.mrc-title{font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;}
+.mrc-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid var(--border);font-size:12px;}
+.mrc-row:last-child{border-bottom:none;}
+.mrc-lbl{color:var(--muted);}
+.mrc-val{font-family:'Instrument Mono',monospace;font-weight:500;}
+.tilt-banner{background:rgba(255,77,109,0.1);border:1px solid rgba(255,77,109,0.25);border-radius:8px;padding:10px 14px;font-size:12px;color:var(--red);margin-bottom:12px;font-weight:600;}
+
+/* ── HOW ── */
+.how-section{padding:80px 0;border-top:1px solid var(--border);}
+.how-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:48px;position:relative;}
+.how-steps::before{content:'';position:absolute;top:24px;left:12%;right:12%;height:1px;background:linear-gradient(90deg,transparent,var(--border2),var(--border2),transparent);}
+.how-step{text-align:center;}
+.how-num{width:48px;height:48px;border-radius:50%;margin:0 auto 14px;background:var(--s2);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-family:'Instrument Mono',monospace;font-size:18px;font-weight:700;color:var(--accent2);position:relative;z-index:1;box-shadow:0 0 20px rgba(124,92,252,0.15);}
+.how-title{font-size:14px;font-weight:700;margin-bottom:6px;}
+.how-desc{font-size:12px;color:var(--muted);line-height:1.6;}
+
+/* ── TEMOIGNAGES ── */
+.testi-section{padding:80px 0;border-top:1px solid var(--border);}
+.testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:48px;}
+.testi-card{background:var(--s1);border:1px solid var(--border);border-radius:14px;padding:22px;position:relative;transition:all 0.3s;}
+.testi-card:hover{border-color:rgba(124,92,252,0.25);transform:translateY(-3px);}
+.testi-card::after{content:'"';position:absolute;bottom:12px;right:16px;font-size:60px;line-height:1;color:var(--muted2);font-weight:900;}
+.tc-stars{color:var(--gold);font-size:13px;margin-bottom:10px;letter-spacing:2px;}
+.tc-text{font-size:13px;color:var(--muted);line-height:1.8;margin-bottom:16px;}
+.tc-author{display:flex;align-items:center;gap:10px;}
+.tc-av{width:36px;height:36px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:800;color:#fff;flex-shrink:0;}
+.tc-name{font-size:13px;font-weight:700;}
+.tc-role{font-size:11px;color:var(--muted);}
+
+/* ── FAQ ── */
+.faq-section{padding:80px 0;border-top:1px solid var(--border);}
+.faq-list{max-width:700px;margin:48px auto 0;display:flex;flex-direction:column;gap:8px;}
+.faq-item{border:1px solid var(--border);border-radius:12px;background:var(--s1);overflow:hidden;}
+.faq-q{padding:18px 22px;font-size:15px;font-weight:700;cursor:pointer;display:flex;align-items:center;justify-content:space-between;gap:16px;transition:background 0.2s;user-select:none;}
+.faq-q:hover{background:var(--s2);}
+.faq-q.open{color:var(--accent2);}
+.faq-icon{font-size:18px;transition:transform 0.3s;color:var(--muted);flex-shrink:0;}
+.faq-q.open .faq-icon{transform:rotate(45deg);color:var(--accent2);}
+.faq-a{padding:0 22px;max-height:0;overflow:hidden;transition:all 0.35s ease;font-size:14px;color:var(--muted);line-height:1.8;}
+.faq-a.open{padding:0 22px 18px;max-height:300px;}
+
+/* ── CTA FINAL ── */
+.cta-section{padding:100px 0;}
+.cta-box{background:linear-gradient(135deg,rgba(124,92,252,0.07),rgba(0,214,143,0.05));border:1px solid rgba(124,92,252,0.2);border-radius:24px;padding:64px 48px;text-align:center;position:relative;overflow:hidden;}
+.cta-box::before{content:'';position:absolute;top:-120px;left:50%;transform:translateX(-50%);width:400px;height:400px;border-radius:50%;background:radial-gradient(circle,rgba(124,92,252,0.1),transparent 70%);pointer-events:none;}
+.cta-box h2{font-size:clamp(32px,5vw,60px);font-weight:900;letter-spacing:-1.5px;line-height:1.05;margin-bottom:14px;}
+.cta-box h2 em{font-style:normal;color:var(--accent2);}
+.cta-box p{font-size:16px;color:var(--muted);max-width:480px;margin:0 auto 28px;line-height:1.7;}
+.price-final{display:inline-flex;align-items:baseline;gap:6px;margin-bottom:28px;}
+.pf-amount{font-size:clamp(48px,6vw,72px);font-weight:900;color:var(--text);line-height:1;}
+.pf-fcfa{font-size:24px;font-weight:700;color:var(--accent2);}
+.pf-note{font-family:'Instrument Mono',monospace;font-size:12px;color:var(--muted);display:block;margin-top:4px;}
+.guarantee{display:flex;align-items:center;gap:8px;justify-content:center;font-size:13px;color:var(--muted);margin-top:20px;}
+.guarantee::before{content:'🔒';}
+
+/* WhatsApp sticky */
+.wa-sticky{position:fixed;bottom:24px;right:24px;z-index:200;display:flex;align-items:center;gap:10px;padding:12px 22px;border-radius:99px;background:linear-gradient(135deg,#25D366,#128C7E);color:#fff;text-decoration:none;font-size:14px;font-weight:700;box-shadow:0 8px 32px rgba(37,211,102,0.35);transition:all 0.3s;animation:waF 3s ease-in-out infinite;}
+.wa-sticky:hover{transform:translateY(-3px);box-shadow:0 14px 40px rgba(37,211,102,0.45);}
+@keyframes waF{0%,100%{transform:translateY(0)}50%{transform:translateY(-4px)}}
+.wa-sticky svg{width:20px;height:20px;flex-shrink:0;}
+
+footer{padding:36px 0;border-top:1px solid var(--border);}
+.footer-in{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:14px;}
+.footer-copy{font-family:'Instrument Mono',monospace;font-size:10px;color:var(--muted);}
+.footer-links{display:flex;gap:10px;}
+.footer-link{font-size:12px;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.footer-link:hover{color:var(--accent2);}
+
+@media(max-width:768px){
+  .prob-grid,.feat-grid,.testi-grid,.mock-stats-grid,.mock-rapport{grid-template-columns:1fr;}
+  .how-steps{grid-template-columns:1fr 1fr;}
+  .how-steps::before{display:none;}
+  .mock-kpis{grid-template-columns:1fr 1fr;}
+  .mt-head,.mt-row{grid-template-columns:1fr 1fr 60px 70px;}
+  .mt-head span:nth-child(n+5),.mt-row span:nth-child(n+5){display:none;}
+  .nav-price{display:none;}
+  .cta-box{padding:40px 20px;}
+  .wa-sticky span{display:none;}
+  .wa-sticky{padding:12px;border-radius:50%;}
+  .screen-tabs .stab{font-size:11px;padding:7px 12px;}
+}
+@media(max-width:500px){
+  .feat-grid,.how-steps{grid-template-columns:1fr;}
+  .wrap{padding:0 16px;}
+  .mock-kpis{grid-template-columns:1fr 1fr;}
+}
+</style>
+</head>
+<body>
+
+<div class="bg-layer">
+  <div class="bg-grid"></div>
+  <div class="bg-glow1"></div>
+  <div class="bg-glow2"></div>
+</div>
+
+<!-- WA -->
+<a class="wa-sticky" href="https://wa.me/22966724250?text=Bonjour%20Aziz%2C%20je%20veux%20accéder%20au%20TradingJournal%20Pro%20!" target="_blank">
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" fill="#fff"><path d="M16 2C8.28 2 2 8.28 2 16c0 2.46.67 4.76 1.82 6.74L2 30l7.48-1.79A13.93 13.93 0 0016 30c7.72 0 14-6.28 14-14S23.72 2 16 2zm6.27 19.44c-.34-.17-2.02-1-2.33-1.11-.31-.11-.54-.17-.77.17-.23.34-.88 1.11-1.08 1.34-.2.23-.4.26-.74.09-.34-.17-1.44-.53-2.74-1.69-1.01-.9-1.7-2.01-1.9-2.35-.2-.34-.02-.52.15-.69.15-.15.34-.4.51-.6.17-.2.23-.34.34-.57.11-.23.06-.43-.03-.6-.09-.17-.77-1.86-1.06-2.55-.28-.67-.56-.58-.77-.59h-.65c-.23 0-.6.09-.91.43-.31.34-1.2 1.17-1.2 2.85 0 1.68 1.23 3.31 1.4 3.54.17.23 2.42 3.7 5.87 5.18.82.35 1.46.56 1.96.72.82.26 1.57.22 2.16.13.66-.1 2.02-.83 2.31-1.62.28-.8.28-1.48.2-1.62-.09-.14-.31-.23-.65-.4z"/></svg>
+  <span>Contacter Aziz</span>
+</a>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-in">
+    <a href="https://akd-hub.vercel.app" class="nav-logo">
+      <div class="nav-logo-ic">📒</div>
+      <div class="nav-logo-tx">Trading<span>Journal</span> Pro</div>
+    </a>
+    <div class="nav-price">2.500 FCFA · Accès complet</div>
+    <a href="#paiement" class="nav-cta">Obtenir l'accès →</a>
+  </div>
+</nav>
+
+<!-- ════ HERO ════ -->
+<section class="hero">
+  <div class="wrap">
+    <div class="hero-badge">TradingJournal Pro · Afrique Francophone</div>
+    <h1 class="hero-h1">
+      <span class="l1">TU TRADES, MAIS</span>
+      <span class="l2">TU PROGRESSES PAS.</span>
+    </h1>
+    <p class="hero-sub">
+      La différence entre un trader qui stagne et un trader qui s'améliore ?<br>
+      <strong>L'un analyse ses trades. L'autre non.</strong><br>
+      TradingJournal Pro t'aide à comprendre pourquoi tu gagnes — et pourquoi tu perds.
+    </p>
+    <p class="hero-truth">Utilisé par des traders au <span>Bénin · Sénégal · Côte d'Ivoire · Mali · Cameroun · Burkina Faso</span> et plus</p>
+
+    <div class="price-box">
+      <div class="price-label">Accès complet · Paiement unique</div>
+      <div class="price-amount">2.500<span class="price-fcfa">FCFA</span></div>
+      <div class="price-note">Moins que ton café du mois. Résultats pour toujours.</div>
+    </div>
+
+    <div class="hero-ctas">
+      <a href="#paiement" class="btn-main">📒 Je veux progresser maintenant</a>
+      <a href="#fonctionnalites" class="btn-ghost">Voir ce que ça fait →</a>
+    </div>
+
+    <div class="hero-proof">
+      <div class="proof-item">Fonctionne sur téléphone & PC</div>
+      <div class="proof-item">Données sauvegardées localement</div>
+      <div class="proof-item">Accès à vie · Zéro abonnement</div>
+      <div class="proof-item">Disponible immédiatement</div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ PROBLÈME ════ -->
+<section class="prob-section">
+  <div class="wrap">
+    <div style="text-align:center;margin-bottom:48px;">
+      <div class="sec-tag">// La vérité que peu de traders veulent entendre</div>
+      <h2 class="sec-h2">Tu te reconnais<br>dans au moins 3 de ces situations ?</h2>
+    </div>
+    <div class="prob-grid">
+      <div class="prob-card">
+        <div class="prob-tag p">😤 Sans TradingJournal Pro</div>
+        <div class="prob-item p"><span class="pi-icon">❌</span> Tu fais les mêmes erreurs tous les mois sans t'en rendre compte</div>
+        <div class="prob-item p"><span class="pi-icon">❌</span> Tu ne sais pas dans quelle session tu performes le mieux</div>
+        <div class="prob-item p"><span class="pi-icon">❌</span> Tu entres en revenge trade après 2 losses et tu perds encore plus</div>
+        <div class="prob-item p"><span class="pi-icon">❌</span> Tu ne sais pas si tu progresses vraiment d'un mois à l'autre</div>
+        <div class="prob-item p"><span class="pi-icon">❌</span> Tu n'as aucune idée de ton winrate réel ni de ton R:R moyen</div>
+        <div class="prob-item p"><span class="pi-icon">❌</span> Tu perds de la discipline sous émotion sans t'en apercevoir</div>
+      </div>
+      <div class="prob-card sol">
+        <div class="prob-tag s">✅ Avec TradingJournal Pro</div>
+        <div class="prob-item s"><span class="pi-icon">✅</span> Chaque erreur est identifiée, catégorisée et tracée automatiquement</div>
+        <div class="prob-item s"><span class="pi-icon">✅</span> Heatmap horaire : tu vois exactement quand tu es le plus rentable</div>
+        <div class="prob-item s"><span class="pi-icon">✅</span> Tilt Detector : alerte automatique après 2 losses consécutifs</div>
+        <div class="prob-item s"><span class="pi-icon">✅</span> Rapport hebdomadaire automatique pour comparer tes semaines</div>
+        <div class="prob-item s"><span class="pi-icon">✅</span> Toutes tes stats en temps réel : winrate, R:R, P&L, série en cours</div>
+        <div class="prob-item s"><span class="pi-icon">✅</span> Comparaison de deux périodes pour mesurer ta vraie progression</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FONCTIONNALITÉS ════ -->
+<section class="feat-section" id="fonctionnalites">
+  <div class="wrap">
+    <div style="text-align:center;">
+      <div class="sec-tag">// Ce que tu obtiens</div>
+      <h2 class="sec-h2">Tout ce dont un trader<br>sérieux a besoin</h2>
+      <p class="sec-sub" style="margin:12px auto 0;">Un outil complet pensé pour les traders d'indices synthétiques et de Forex.</p>
+    </div>
+    <div class="feat-grid">
+      <div class="feat-card">
+        <div class="feat-icon">📊</div>
+        <div class="feat-title">Tableau de bord complet</div>
+        <div class="feat-desc">Winrate, P&L total, R:R moyen, série en cours — tout en un coup d'œil dès que tu ouvres l'outil.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📈</div>
+        <div class="feat-title">Courbe d'équité</div>
+        <div class="feat-desc">Visualise ta progression trade par trade. Vois exactement où tu gagnes de la valeur et où tu en perds.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⚠️</div>
+        <div class="feat-title">Analyse des erreurs</div>
+        <div class="feat-desc">Sur chaque loss, tu catégorises l'erreur. L'outil classe tes erreurs les plus fréquentes pour t'aider à les corriger.</div>
+        <span class="feat-new">EXCLUSIF</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🚨</div>
+        <div class="feat-title">Tilt Detector</div>
+        <div class="feat-desc">2 losses consécutifs → alerte orange. 3+ losses → alerte rouge "Stop trading". Tu protèges ton capital sous émotion.</div>
+        <span class="feat-new">UNIQUE</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⏰</div>
+        <div class="feat-title">Heatmap par heure</div>
+        <div class="feat-desc">Découvre dans quelle session (Matin, Après-midi, Soir, Nuit) tu es le plus rentable. Arrête de trader quand tu es moins performant.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📅</div>
+        <div class="feat-title">Calendrier de performance</div>
+        <div class="feat-desc">Vue mensuelle colorée : chaque jour tradé est coloré selon ton P&L. Vert = bon jour, rouge = mauvais jour.</div>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">📆</div>
+        <div class="feat-title">Rapport hebdomadaire auto</div>
+        <div class="feat-desc">Chaque semaine, un résumé automatique : meilleur trade, pire trade, erreur principale, leçon de la semaine.</div>
+        <span class="feat-new">NOUVEAU</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">⚖️</div>
+        <div class="feat-title">Comparaison de périodes</div>
+        <div class="feat-desc">Compare deux périodes côte à côte. Ex : "Est-ce que j'ai progressé entre mars et avril ?" — réponse immédiate.</div>
+        <span class="feat-new">NOUVEAU</span>
+      </div>
+      <div class="feat-card">
+        <div class="feat-icon">🎯</div>
+        <div class="feat-title">Objectifs & limites</div>
+        <div class="feat-desc">Définis ton objectif mensuel, ta perte max journalière et ton max de trades/jour. L'outil t'alerte quand tu approches les limites.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ SCREENSHOTS ════ -->
+<section class="screen-section">
+  <div class="wrap">
+    <div style="text-align:center;">
+      <div class="sec-tag">// Aperçu de l'outil</div>
+      <h2 class="sec-h2">Vois l'outil<br>en action</h2>
+    </div>
+    <div class="screen-tabs">
+      <button class="stab active" onclick="showScreen('journal',this)">📋 Journal</button>
+      <button class="stab" onclick="showScreen('stats',this)">📊 Statistiques</button>
+      <button class="stab" onclick="showScreen('rapport',this)">📆 Rapport</button>
+    </div>
+    <div class="screen-preview">
+      <div class="screen-frame">
+        <div class="screen-bar">
+          <div class="sdots"><div class="sdot sd-r"></div><div class="sdot sd-y"></div><div class="sdot sd-g"></div></div>
+          <div class="surl">trading-journal-ten-liard.vercel.app</div>
+        </div>
+
+        <!-- Journal tab -->
+        <div class="screen-content active" id="sc-journal">
+          <div class="mock-kpis">
+            <div class="mock-kpi"><div class="mk-val" style="color:var(--accent2);">47</div><div class="mk-lbl">Total Trades</div></div>
+            <div class="mock-kpi"><div class="mk-val" style="color:var(--green);">68%</div><div class="mk-lbl">Winrate</div></div>
+            <div class="mock-kpi"><div class="mk-val" style="color:var(--green);">+$612</div><div class="mk-lbl">P&L Total</div></div>
+            <div class="mock-kpi"><div class="mk-val" style="color:var(--blue);">1:2.8</div><div class="mk-lbl">R:R Moyen</div></div>
+          </div>
+          <div class="mock-table">
+            <div class="mt-head">
+              <span>Date</span><span>Instrument</span><span>Dir.</span><span>Résultat</span><span>P&L</span><span>Signal</span><span>Score</span>
+            </div>
+            <div class="mt-row">
+              <span style="font-family:'Instrument Mono',monospace;font-size:10px;">18/05 14:32</span>
+              <span style="font-weight:700;font-size:11px;">V75</span>
+              <span style="color:var(--green);font-weight:700;">▲ Buy</span>
+              <span><span class="badge-w">Win</span></span>
+              <span class="pnl-p">+$22.50</span>
+              <span style="font-size:10px;">Marteau</span>
+              <span style="font-family:'Instrument Mono',monospace;font-size:10px;">7/8</span>
+            </div>
+            <div class="mt-row">
+              <span style="font-family:'Instrument Mono',monospace;font-size:10px;">18/05 09:15</span>
+              <span style="font-weight:700;font-size:11px;">V100</span>
+              <span style="color:var(--red);font-weight:700;">▼ Sell</span>
+              <span><span class="badge-l">Loss</span></span>
+              <span class="pnl-n">-$8.00</span>
+              <span style="font-size:10px;">Doji</span>
+              <span style="font-family:'Instrument Mono',monospace;font-size:10px;">5/8</span>
+            </div>
+            <div class="mt-row">
+              <span style="font-family:'Instrument Mono',monospace;font-size:10px;">17/05 16:44</span>
+              <span style="font-weight:700;font-size:11px;">V50</span>
+              <span style="color:var(--green);font-weight:700;">▲ Buy</span>
+              <span><span class="badge-w">Win</span></span>
+              <span class="pnl-p">+$34.00</span>
+              <span style="font-size:10px;">Double Bottom</span>
+              <span style="font-family:'Instrument Mono',monospace;font-size:10px;">8/8</span>
+            </div>
+            <div class="mt-row">
+              <span style="font-family:'Instrument Mono',monospace;font-size:10px;">17/05 11:20</span>
+              <span style="font-weight:700;font-size:11px;">Jump 50</span>
+              <span style="color:var(--green);font-weight:700;">▲ Buy</span>
+              <span><span class="badge-w">Win</span></span>
+              <span class="pnl-p">+$18.00</span>
+              <span style="font-size:10px;">Engulfing</span>
+              <span style="font-family:'Instrument Mono',monospace;font-size:10px;">6/8</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Stats tab -->
+        <div class="screen-content" id="sc-stats">
+          <div class="mock-stats-grid">
+            <div class="mock-equity">
+              <div class="mock-eq-title">📈 Courbe d'équité</div>
+              <svg viewBox="0 0 400 100" style="width:100%;height:90px;">
+                <defs><linearGradient id="eq" x1="0" y1="0" x2="0" y2="1"><stop offset="0%" stop-color="#7c5cfc" stop-opacity="0.3"/><stop offset="100%" stop-color="#7c5cfc" stop-opacity="0"/></linearGradient></defs>
+                <path d="M0,80 L40,75 L80,65 L120,68 L160,50 L200,45 L240,30 L280,35 L320,18 L360,12 L400,6" stroke="#7c5cfc" stroke-width="2.5" fill="none"/>
+                <path d="M0,80 L40,75 L80,65 L120,68 L160,50 L200,45 L240,30 L280,35 L320,18 L360,12 L400,6 L400,100 L0,100Z" fill="url(#eq)"/>
+              </svg>
+              <div style="display:flex;justify-content:space-between;font-size:10px;color:var(--muted);font-family:'Instrument Mono',monospace;margin-top:6px;"><span>Début</span><span style="color:var(--green);font-weight:700;">+$612 ↑</span><span>Aujourd'hui</span></div>
+            </div>
+            <div class="mock-piecol">
+              <div class="mock-pie-box"><div class="pie-num" style="color:var(--green);">68%</div><div class="pie-lbl">Winrate global</div></div>
+              <div class="mock-pie-box">
+                <div style="display:flex;justify-content:space-around;margin-bottom:6px;">
+                  <div><div style="font-family:'Instrument Mono',monospace;font-size:16px;color:var(--green);">32W</div><div style="font-size:9px;color:var(--muted);">Wins</div></div>
+                  <div><div style="font-family:'Instrument Mono',monospace;font-size:16px;color:var(--red);">11L</div><div style="font-size:9px;color:var(--muted);">Losses</div></div>
+                  <div><div style="font-family:'Instrument Mono',monospace;font-size:16px;color:var(--gold);">4BE</div><div style="font-size:9px;color:var(--muted);">BE</div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div style="margin-top:12px;background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:14px;">
+            <div style="font-size:10px;color:var(--muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">⏰ Performance par session</div>
+            <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:8px;">
+              <div style="text-align:center;padding:10px;background:rgba(0,214,143,0.08);border:1px solid rgba(0,214,143,0.15);border-radius:8px;"><div style="font-size:14px;font-weight:800;color:var(--green);">🌅</div><div style="font-size:11px;font-weight:700;margin:4px 0;">Matin</div><div style="font-family:'Instrument Mono',monospace;font-size:11px;color:var(--green);">74% WR</div></div>
+              <div style="text-align:center;padding:10px;background:rgba(124,92,252,0.08);border:1px solid rgba(124,92,252,0.15);border-radius:8px;"><div style="font-size:14px;font-weight:800;">☀️</div><div style="font-size:11px;font-weight:700;margin:4px 0;">Après-midi</div><div style="font-family:'Instrument Mono',monospace;font-size:11px;color:var(--accent2);">61% WR</div></div>
+              <div style="text-align:center;padding:10px;background:rgba(255,77,109,0.08);border:1px solid rgba(255,77,109,0.15);border-radius:8px;"><div style="font-size:14px;font-weight:800;">🌆</div><div style="font-size:11px;font-weight:700;margin:4px 0;">Soir</div><div style="font-family:'Instrument Mono',monospace;font-size:11px;color:var(--red);">43% WR</div></div>
+              <div style="text-align:center;padding:10px;background:rgba(255,255,255,0.03);border:1px solid var(--border);border-radius:8px;"><div style="font-size:14px;font-weight:800;">🌙</div><div style="font-size:11px;font-weight:700;margin:4px 0;">Nuit</div><div style="font-family:'Instrument Mono',monospace;font-size:11px;color:var(--muted);">50% WR</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Rapport tab -->
+        <div class="screen-content" id="sc-rapport">
+          <div class="tilt-banner">🚨 Tilt Detector — 2 losses consécutifs détectés. Pause recommandée avant le prochain trade.</div>
+          <div class="mock-rapport">
+            <div class="mock-rcard">
+              <div class="mrc-title">📆 Rapport semaine du 12 → 18 Mai</div>
+              <div class="mrc-row"><span class="mrc-lbl">Total trades</span><span class="mrc-val">12</span></div>
+              <div class="mrc-row"><span class="mrc-lbl">Winrate</span><span class="mrc-val" style="color:var(--green);">67%</span></div>
+              <div class="mrc-row"><span class="mrc-lbl">P&L semaine</span><span class="mrc-val" style="color:var(--green);">+$142.50</span></div>
+              <div class="mrc-row"><span class="mrc-lbl">Meilleur trade</span><span class="mrc-val" style="color:var(--green);">+$34 · V50</span></div>
+              <div class="mrc-row"><span class="mrc-lbl">Erreur principale</span><span class="mrc-val" style="color:var(--red);">Entrée trop tôt (3×)</span></div>
+            </div>
+            <div class="mock-rcard">
+              <div class="mrc-title">⚖️ Mai vs Avril</div>
+              <div class="mrc-row"><span class="mrc-lbl">Trades</span><span class="mrc-val">47 ✅ vs 38</span></div>
+              <div class="mrc-row"><span class="mrc-lbl">Winrate</span><span class="mrc-val" style="color:var(--green);">68% ✅ vs 55%</span></div>
+              <div class="mrc-row"><span class="mrc-lbl">P&L</span><span class="mrc-val" style="color:var(--green);">+$612 ✅ vs +$180</span></div>
+              <div class="mrc-row"><span class="mrc-lbl">R:R moyen</span><span class="mrc-val" style="color:var(--green);">1:2.8 ✅ vs 1:1.9</span></div>
+              <div style="margin-top:12px;padding:10px;background:rgba(0,214,143,0.06);border:1px solid rgba(0,214,143,0.15);border-radius:8px;font-size:11px;color:var(--muted);line-height:1.6;">💡 <strong style="color:var(--text);">Mai surperforme.</strong> +$432 de différence. Continue dans cette direction.</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ HOW ════ -->
+<section class="how-section">
+  <div class="wrap">
+    <div style="text-align:center;">
+      <div class="sec-tag">// Accès immédiat</div>
+      <h2 class="sec-h2">Tu es à 4 étapes<br>de trader mieux</h2>
+    </div>
+    <div class="how-steps">
+      <div class="how-step"><div class="how-num">1</div><div class="how-title">Tu paies</div><div class="how-desc">2.500 FCFA · Paiement unique. Accès à vie. Mobile Money, carte, Wave — selon ta région.</div></div>
+      <div class="how-step"><div class="how-num">2</div><div class="how-title">Tu reçois le lien</div><div class="how-desc">Immédiatement après le paiement, tu reçois le lien d'accès à l'outil sur WhatsApp.</div></div>
+      <div class="how-step"><div class="how-num">3</div><div class="how-title">Tu enregistres tes trades</div><div class="how-desc">Chaque trade, tu notes l'instrument, le résultat, le signal, l'erreur si loss.</div></div>
+      <div class="how-step"><div class="how-num">4</div><div class="how-title">Tu t'améliores</div><div class="how-desc">Les stats, le rapport hebdo et la comparaison te montrent exactement où progresser.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ TEMOIGNAGES ════ -->
+<section class="testi-section">
+  <div class="wrap">
+    <div style="text-align:center;">
+      <div class="sec-tag">// Retours de traders africains</div>
+      <h2 class="sec-h2">Ils l'utilisent<br>chaque jour</h2>
+    </div>
+    <div class="testi-grid">
+      <div class="testi-card">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-text">Grâce à la heatmap, j'ai découvert que je perdais systématiquement le soir après 20h. Depuis que j'ai arrêté de trader la nuit, mon winrate a grimpé de 48% à 64% en 3 semaines. Ce seul insight valait bien plus que 2.500 FCFA.</p>
+        <div class="tc-author">
+          <div class="tc-av" style="background:linear-gradient(135deg,#f97316,#ea580c);">FN</div>
+          <div><div class="tc-name">Fatou Ndiaye</div><div class="tc-role">🇸🇳 Sénégal · Trader V75 / V50</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-text">Le rapport hebdomadaire m'a ouvert les yeux. En 1 mois j'ai réalisé que "entrée trop tôt" représentait 70% de mes pertes. Je n'aurais jamais su sans l'outil. Maintenant j'attends la confirmation et mes losses ont diminué de moitié.</p>
+        <div class="tc-author">
+          <div class="tc-av" style="background:linear-gradient(135deg,#8b5cf6,#7c3aed);">KD</div>
+          <div><div class="tc-name">Kofi Danso</div><div class="tc-role">🇬🇭 Ghana · Trader Deriv</div></div>
+        </div>
+      </div>
+      <div class="testi-card">
+        <div class="tc-stars">★★★★★</div>
+        <p class="tc-text">Le Tilt Detector m'a sauvé plusieurs fois. Avant, après 2 losses j'entrais direct pour "récupérer" et je perdais encore plus. Maintenant quand l'alerte s'affiche, je ferme l'appli. Mon compte a arrêté de fondre.</p>
+        <div class="tc-author">
+          <div class="tc-av" style="background:linear-gradient(135deg,#10b981,#059669);">YA</div>
+          <div><div class="tc-name">Yves Atangana</div><div class="tc-role">🇨🇲 Cameroun · Trader part-time</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ FAQ ════ -->
+<section class="faq-section" id="faq">
+  <div class="wrap">
+    <div style="text-align:center;">
+      <div class="sec-tag">// Questions fréquentes</div>
+      <h2 class="sec-h2">Tout ce que tu<br>veux savoir</h2>
+    </div>
+    <div class="faq-list">
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">C'est quoi exactement TradingJournal Pro ?<span class="faq-icon">+</span></div>
+        <div class="faq-a">TradingJournal Pro est un outil web que tu ouvres dans ton navigateur sur téléphone ou ordinateur. Tu enregistres chaque trade (instrument, direction, résultat, signal, erreur si loss), et l'outil génère automatiquement des statistiques détaillées, des graphiques, un rapport hebdomadaire et des alertes de protection. Toutes tes données sont sauvegardées dans ton navigateur.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Comment je paie ? Quels moyens sont acceptés ?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Le paiement se fait via la page de paiement sécurisée. Selon ta région, tu peux payer par Mobile Money (MTN, Orange Money, Moov Money, Wave), carte bancaire ou d'autres moyens disponibles. Après confirmation du paiement, tu reçois l'accès immédiatement.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Est-ce que c'est un abonnement mensuel ?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Non, absolument pas. C'est un paiement unique de 2.500 FCFA. Tu paies une seule fois et tu as accès à vie à TradingJournal Pro, y compris toutes les futures mises à jour. Pas d'abonnement, pas de surprise.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Mes données sont-elles en sécurité ? Quelqu'un peut voir mes trades ?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Tes données sont stockées uniquement dans ton navigateur (localStorage). Elles ne sont jamais envoyées sur un serveur, jamais partagées avec personne. Seul toi y as accès depuis ton appareil. Tu peux aussi exporter tes données en CSV à tout moment.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Ça fonctionne sur téléphone ? Quel appareil faut-il ?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Oui, TradingJournal Pro est entièrement responsive et optimisé pour mobile. Il fonctionne sur n'importe quel téléphone (Android ou iPhone) avec un navigateur récent (Chrome, Safari, Firefox). Pas d'application à télécharger.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Est-ce que ça marche pour les indices synthétiques Deriv ?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Oui, TradingJournal Pro est conçu en premier lieu pour les traders d'indices synthétiques Deriv (V25, V50, V75, V100, Jump 50, Jump 100, Step Index...). Il fonctionne aussi pour toutes les paires Forex, les métaux et tout autre instrument — le champ instrument est libre, tu écris ce que tu veux.</div>
+      </div>
+      <div class="faq-item">
+        <div class="faq-q" onclick="toggleFaq(this)">Et si j'ai un problème après l'achat ?<span class="faq-icon">+</span></div>
+        <div class="faq-a">Aziz Kadiri Dine est disponible sur WhatsApp pour t'aider. Si tu as le moindre problème d'accès ou d'utilisation, tu contactes directement et tu reçois une réponse rapide. Pas de support robot, pas de ticket — une vraie personne qui répond.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════ CTA FINAL ════ -->
+<section class="cta-section" id="paiement">
+  <div class="wrap">
+    <div class="cta-box">
+      <div style="display:inline-flex;align-items:center;gap:8px;padding:6px 16px;border-radius:99px;background:rgba(245,200,66,0.1);border:1px solid rgba(245,200,66,0.2);font-size:12px;font-weight:700;color:var(--gold);margin-bottom:20px;font-family:'Instrument Mono',monospace;">⚡ Accès immédiat après paiement</div>
+      <h2>Commence à trader<br>avec <em>méthode et données.</em></h2>
+      <p>Arrête de répéter les mêmes erreurs. 2.500 FCFA pour comprendre ton trading, corriger tes failles et progresser vraiment.</p>
+      <div class="price-final">
+        <div>
+          <div style="display:flex;align-items:baseline;gap:6px;justify-content:center;">
+            <div class="pf-amount">2.500</div>
+            <div class="pf-fcfa">FCFA</div>
+          </div>
+          <div class="pf-note">Paiement unique · Accès à vie · Disponible immédiatement</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;">
+        <!-- REMPLACE CE LIEN PAR TON LIEN DE PAIEMENT -->
+        <a href="LIEN_PAIEMENT_ICI" class="btn-main" onclick="trackPurchase()">📒 Obtenir TradingJournal Pro · 2.500 FCFA</a>
+        <a href="https://wa.me/22966724250?text=Bonjour%20Aziz%2C%20je%20veux%20accéder%20au%20TradingJournal%20Pro%20!" target="_blank" class="btn-ghost">💬 Payer via WhatsApp</a>
+      </div>
+      <div class="guarantee">Paiement sécurisé · Accès garanti immédiat · Support WhatsApp inclus</div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="wrap">
+    <div class="footer-in">
+      <div>
+        <div style="font-family:'Instrument Mono',monospace;font-size:12px;color:var(--text);font-weight:700;margin-bottom:4px;">⚡ AKD TRADING HUB</div>
+        <div class="footer-copy">© 2026 Aziz Kadiri Dine · TradingJournal Pro · Tous droits réservés</div>
+      </div>
+      <div class="footer-links">
+        <a href="https://akd-hub.vercel.app" class="footer-link">← Retour au Hub</a>
+        <a href="https://trading-journal-ten-liard.vercel.app" class="footer-link">Démo gratuite</a>
+        <a href="https://wa.me/22966724250" target="_blank" class="footer-link">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<script>
+function toggleFaq(el){
+  const a=el.nextElementSibling;
+  const open=el.classList.contains('open');
+  document.querySelectorAll('.faq-q.open').forEach(q=>{q.classList.remove('open');q.nextElementSibling.classList.remove('open');});
+  if(!open){el.classList.add('open');a.classList.add('open');}
+}
+
+function showScreen(tab,btn){
+  document.querySelectorAll('.screen-content').forEach(s=>s.classList.remove('active'));
+  document.querySelectorAll('.stab').forEach(b=>b.classList.remove('active'));
+  document.getElementById('sc-'+tab).classList.add('active');
+  btn.classList.add('active');
+}
+
+function trackPurchase(){
+  if(typeof gtag!=='undefined'){
+    gtag('event','begin_checkout',{event_category:'Journal',event_label:'2500 FCFA',value:2500,currency:'XOF'});
+  }
+}
+
+const obs=new IntersectionObserver((entries)=>{
+  entries.forEach((e,i)=>{
+    if(e.isIntersecting){
+      e.target.style.animation=`up 0.6s ease ${(i%3)*0.1}s both`;
+      obs.unobserve(e.target);
+    }
+  });
+},{threshold:0.1});
+document.querySelectorAll('.feat-card,.prob-item,.how-step,.faq-item,.testi-card').forEach(el=>{
+  el.style.opacity='0';
+  obs.observe(el);
+});
+</script>
+</body>
+</html>
