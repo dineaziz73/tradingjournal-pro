@@ -7,6 +7,23 @@
 <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800;900&family=Instrument+Mono:ital@0;1&display=swap" rel="stylesheet">
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJQCEGS8SH"></script>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '806580201822678');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=806580201822678&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 <script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','G-SJQCEGS8SH');</script>
 <style>
 :root {
@@ -632,7 +649,7 @@ footer{padding:36px 0;border-top:1px solid var(--border);}
       </div>
       <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;margin-bottom:16px;">
         <!-- REMPLACE CE LIEN PAR TON LIEN DE PAIEMENT -->
-        <a href="LIEN_PAIEMENT_ICI" class="btn-main" onclick="trackPurchase()">📒 Obtenir TradingJournal Pro · 2.500 FCFA</a>
+        <a href="https://shop.learn-and-earn.site/prd_vhchbbjk/checkout" class="btn-main" onclick="trackPurchase()">📒 Obtenir TradingJournal Pro · 2.500 FCFA</a>
         <a href="https://wa.me/22966724250?text=Bonjour%20Aziz%2C%20je%20veux%20accéder%20au%20TradingJournal%20Pro%20!" target="_blank" class="btn-ghost">💬 Payer via WhatsApp</a>
       </div>
       <div class="guarantee">Paiement sécurisé · Accès garanti immédiat · Support WhatsApp inclus</div>
@@ -675,6 +692,9 @@ function showScreen(tab,btn){
 function trackPurchase(){
   if(typeof gtag!=='undefined'){
     gtag('event','begin_checkout',{event_category:'Journal',event_label:'2500 FCFA',value:2500,currency:'XOF'});
+  }
+  if(typeof fbq!=='undefined'){
+    fbq('track','InitiateCheckout',{value:2500,currency:'XOF',content_name:'TradingJournal Pro'});
   }
 }
 
