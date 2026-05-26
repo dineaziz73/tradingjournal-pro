@@ -8,6 +8,22 @@
 <!-- Google Analytics -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-SJQCEGS8SH"></script>
 <!-- Meta Pixel Code -->
+<!-- ── SOCIAL PROOF POPUP ── -->
+<div class="sp-popup" id="sp-popup">
+  <div class="sp-icon">📒</div>
+  <div class="sp-content">
+    <div class="sp-top">
+      <span class="sp-dot"></span>
+      <span class="sp-badge">Achat récent</span>
+    </div>
+    <div class="sp-name" id="sp-name"></div>
+    <div class="sp-action">vient d'acheter <strong>TradingJournal Pro</strong></div>
+    <div class="sp-time" id="sp-time"></div>
+  </div>
+  <button class="sp-close" onclick="closePopup()">✕</button>
+  <div class="sp-progress" id="sp-progress"></div>
+</div>
+
 <script>
 !function(f,b,e,v,n,t,s)
 {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
@@ -252,6 +268,100 @@ footer{padding:36px 0;border-top:1px solid var(--border);}
   .wrap{padding:0 16px;}
   .mock-kpis{grid-template-columns:1fr 1fr;}
 }
+
+/* ── SOCIAL PROOF POPUP ── */
+.sp-popup {
+  position: fixed;
+  bottom: 28px;
+  left: 24px;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: rgba(8, 10, 22, 0.96);
+  border: 1px solid rgba(124,92,252,0.25);
+  border-left: 3px solid var(--accent);
+  border-radius: 14px;
+  padding: 13px 18px 13px 14px;
+  max-width: 340px;
+  min-width: 280px;
+  box-shadow: 0 8px 40px rgba(0,0,0,0.5), 0 0 20px rgba(124,92,252,0.08);
+  backdrop-filter: blur(16px);
+  transform: translateY(100px);
+  opacity: 0;
+  transition: all 0.5s cubic-bezier(.4,0,.2,1);
+  pointer-events: none;
+}
+.sp-popup.visible {
+  transform: translateY(0);
+  opacity: 1;
+  pointer-events: auto;
+}
+.sp-popup.hiding {
+  transform: translateY(100px);
+  opacity: 0;
+}
+.sp-icon {
+  width: 42px; height: 42px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), #5b3de8);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 18px; flex-shrink: 0;
+  box-shadow: 0 4px 14px rgba(124,92,252,0.3);
+}
+.sp-content { flex: 1; min-width: 0; }
+.sp-top {
+  display: flex; align-items: center; gap: 6px;
+  margin-bottom: 3px;
+}
+.sp-badge {
+  font-family: 'Instrument Mono', monospace;
+  font-size: 9px; font-weight: 700;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  color: var(--accent); padding: 2px 7px;
+  background: rgba(124,92,252,0.12);
+  border-radius: 99px;
+}
+.sp-name {
+  font-size: 13px; font-weight: 700;
+  color: #e0e8f8; line-height: 1.4;
+  white-space: nowrap; overflow: hidden;
+  text-overflow: ellipsis;
+}
+.sp-name .flag { margin-right: 4px; }
+.sp-action {
+  font-size: 11px; color: rgba(224,232,248,0.55);
+  line-height: 1.4;
+}
+.sp-action strong { color: var(--accent2); font-weight: 700; }
+.sp-time {
+  font-family: 'Instrument Mono', monospace;
+  font-size: 10px; color: rgba(224,232,248,0.35);
+  margin-top: 2px;
+}
+.sp-close {
+  position: absolute; top: 8px; right: 10px;
+  font-size: 13px; color: rgba(224,232,248,0.2);
+  cursor: pointer; line-height: 1;
+  background: none; border: none; padding: 2px;
+  transition: color 0.2s;
+}
+.sp-close:hover { color: rgba(224,232,248,0.6); }
+.sp-progress {
+  position: absolute; bottom: 0; left: 0;
+  height: 2px; border-radius: 0 0 14px 14px;
+  background: linear-gradient(90deg, var(--accent), #5b3de8);
+  width: 100%;
+  transform-origin: left;
+  transition: transform 10s linear;
+}
+.sp-dot {
+  width: 7px; height: 7px; border-radius: 50%;
+  background: var(--accent); flex-shrink: 0;
+  box-shadow: 0 0 6px var(--accent);
+  animation: spPulse 2s infinite;
+}
+@keyframes spPulse { 0%,100%{opacity:1;transform:scale(1)} 50%{opacity:0.4;transform:scale(0.8)} }
 </style>
 </head>
 <body>
@@ -710,6 +820,77 @@ document.querySelectorAll('.feat-card,.prob-item,.how-step,.faq-item,.testi-card
   el.style.opacity='0';
   obs.observe(el);
 });
+
+// ── SOCIAL PROOF POPUP ──
+const spData = [
+  { name: "Aminata Diop",       flag: "🇸🇳", country: "Sénégal",        time: "il y a 2 minutes" },
+  { name: "Abdoulaye Cissé",    flag: "🇲🇱", country: "Mali",           time: "il y a 5 minutes" },
+  { name: "Kofi Mensah",        flag: "🇬🇭", country: "Ghana",          time: "il y a 8 minutes" },
+  { name: "Fatou Traoré",       flag: "🇧🇫", country: "Burkina Faso",   time: "il y a 12 minutes" },
+  { name: "Jean-Baptiste Koffi",flag: "🇨🇮", country: "Côte d'Ivoire",  time: "il y a 3 minutes" },
+  { name: "Mariama Bah",        flag: "🇬🇳", country: "Guinée",         time: "il y a 18 minutes" },
+  { name: "Yves Atangana",      flag: "🇨🇲", country: "Cameroun",       time: "il y a 7 minutes" },
+  { name: "Aïssatou Diallo",    flag: "🇸🇳", country: "Sénégal",        time: "il y a 34 secondes" },
+  { name: "Moussa Coulibaly",   flag: "🇲🇱", country: "Mali",           time: "il y a 22 minutes" },
+  { name: "Romuald Ahouansou",  flag: "🇧🇯", country: "Bénin",          time: "il y a 1 minute" },
+  { name: "Grace Owusu",        flag: "🇬🇭", country: "Ghana",          time: "il y a 45 secondes" },
+  { name: "Ousmane Sarr",       flag: "🇸🇳", country: "Sénégal",        time: "il y a 15 minutes" },
+  { name: "Sylvie Nguema",      flag: "🇬🇦", country: "Gabon",          time: "il y a 4 minutes" },
+  { name: "Ibrahima Konaté",    flag: "🇬🇳", country: "Guinée",         time: "il y a 28 minutes" },
+  { name: "Christelle Zongo",   flag: "🇧🇫", country: "Burkina Faso",   time: "il y a 52 secondes" },
+];
+
+let spIndex = 0;
+let spTimer = null;
+let spClosed = false;
+let spShuffled = [...spData].sort(() => Math.random() - 0.5);
+
+function showPopup() {
+  if (spClosed) return;
+  const popup = document.getElementById('sp-popup');
+  const nameEl = document.getElementById('sp-name');
+  const timeEl = document.getElementById('sp-time');
+  const progress = document.getElementById('sp-progress');
+
+  const item = spShuffled[spIndex % spShuffled.length];
+  spIndex++;
+
+  // Reset & update content
+  popup.classList.remove('visible', 'hiding');
+  nameEl.innerHTML = `<span class="flag">${item.flag}</span>${item.name}`;
+  timeEl.textContent = `${item.time} · ${item.country}`;
+
+  // Show with animation
+  requestAnimationFrame(() => {
+    popup.classList.add('visible');
+    // Progress bar
+    progress.style.transition = 'none';
+    progress.style.transform = 'scaleX(1)';
+    requestAnimationFrame(() => {
+      progress.style.transition = 'transform 10s linear';
+      progress.style.transform = 'scaleX(0)';
+    });
+  });
+
+  // Hide after 10s then show next
+  spTimer = setTimeout(() => {
+    popup.classList.add('hiding');
+    setTimeout(() => {
+      if (!spClosed) showPopup();
+    }, 600);
+  }, 10000);
+}
+
+function closePopup() {
+  spClosed = true;
+  clearTimeout(spTimer);
+  const popup = document.getElementById('sp-popup');
+  popup.classList.remove('visible');
+  popup.classList.add('hiding');
+}
+
+// Start after 3 seconds
+setTimeout(showPopup, 3000);
 </script>
 </body>
 </html>
